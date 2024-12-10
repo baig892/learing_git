@@ -1,0 +1,48 @@
+name: Deploy PHP Project
+
+on:
+  push:
+    branches:
+      - main # Trigger the workflow on pushes to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up PHP environment
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1' # Replace with your PHP version
+          tools: composer    # Install Composer for dependency management
+
+      # Step 3: Install PHP dependencies
+      - name: Install Dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # Step 4: Deploy to server using SCP
+      - name: Deploy to Server
+        uses: appleboy/scp-action@v0.1.6
+        with:
+          host: ${{ baig892 }}
+          username: ${{ baig892 }}
+          password: ${{ Rana363194#@ }} # Use SSH_PRIVATE_KEY if authenticating with an SSH key
+          port: 22
+          source: "./*"                           # Files to upload (entire project directory)
+          target: "/var/www/html"                 # Target directory on the server
+
+      # Step 5: Restart Web Server (Optional)
+      - name: Restart Web Server
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ baig892 }}
+          username: ${{ baig92 }}
+          password: ${{ Rana363194#@ }} # Use SSH_PRIVATE_KEY if authenticating with an SSH key
+          port: 22
+          script: |
+            sudo systemctl restart apache2 # Replace 'apache2' with your web server's service name
