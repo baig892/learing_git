@@ -1,0 +1,19 @@
+name: Hello World CI/CD
+
+on:
+  push:
+    branches:
+      - main # Trigger workflow on pushes to the 'main' branch
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code (optional for this example)
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Print "Hello, World!"
+      - name: Print Hello World
+        run: echo "Hello, World!"
